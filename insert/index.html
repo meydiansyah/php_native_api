@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+*:focus {outline: none;}
+
+body {font-family: "Lato", sans-serif; padding: 10px 20%;}
+
+/* Style the tab */
+.tab {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 20%;
+  padding: 11px 8px;
+  height: 300px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  display: block;
+  background-color: inherit;
+  color: black;
+  padding: 11px 8px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  float: left;
+  padding: 5px 20px;
+  border: 1px solid #ccc;
+  width: 80%;
+  border-left: none;
+  height: 300px;
+}
+
+.tabcontent input {
+  border: none;
+  border-bottom: 2px solid red;
+  padding: 8px;
+  width: 100%;
+}
+.tabcontent #jari {
+	width: 20%;
+}
+
+.tabcontent #jari {
+	width: 70%;
+}
+
+
+.btnhitung {
+  background-color: #008CBA; 
+  color: white; 
+  border: none;
+  padding: 10px 32px;
+  text-align: center;
+  width: 100%;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px 0;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  
+}
+
+.btnhitung:hover {
+  background-color: #0dace0;
+  color: white;
+}
+
+.showhasil {
+	display: none;
+}
+
+.cardhasil {
+  float: left;
+  text-align: center;
+  width: 100%;
+  font-size: 20px;
+  background-color: #ccc;
+  border-radius: 5px;
+}
+
+</style>
+</head>
+<body>
+
+<h2>Hitung Lingkaran</h2>
+<p>Pilih menu hitung pada tab dibawah ini:</p>
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'jari')" id="defaultOpen">Jari-jari</button>
+  <button class="tablinks" onclick="openCity(event, 'luas')">Luas</button>
+  <button class="tablinks" onclick="openCity(event, 'keliling')">Keliling</button>
+</div>
+
+<div id="jari" class="tabcontent">
+  <h3>Jari - Jari Lingkaran</h3>
+  <input type="number" placeholder="Masukkan Keliling lingkaran (cm)" id="form_jari" required> 
+  <button class="btnhitung" onclick="validator('jari')">Hitung</button>
+  <p id="null"></p>
+  <div class="showhasil" id='showhasil'>
+  	  <p> jari - jari : </p>
+    <div class="cardhasil">
+      <p>
+        <b id='hasil'></b>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div id="luas" class="tabcontent">
+  <h3>Luas Lingkaran</h3>
+  <input type="number" placeholder="Masukkan Jari-Jari lingkaran (cm)" id="form_luas"> 
+    <button class="btnhitung" onclick="validator('luas')">Hitung</button>
+  <p id="null"></p>
+  <div class="showhasil" id='showhasil'>
+  	  <p> Luas : </p>
+    <div class="cardhasil">
+      <p>
+        <b id='hasil'></b>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div id="keliling" class="tabcontent">
+  <h3>Keliling Lingkaran</h3>
+  <input type="number" placeholder="Masukkan Jari-Jari lingkaran (cm)" id="form_keliling"> 
+    <button class="btnhitung" onclick="validator('keliling')">Hitung</button>
+  <p id="null"></p>
+  <div class="showhasil_keliling" id='showHasil'>
+  	  <p> Keliling : </p>
+    <div class="cardhasil">
+      <p>
+        <b id='hasil'></b>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+
+function validator(type) {
+  var x, text;
+
+  switch(type) {
+  	case 'jari':
+	    x = document.getElementById('form_jari').value;
+        break;
+  	case 'luas':
+	    x = document.getElementById('form_luas').value;
+        break;
+  	case 'keliling':
+	    x = document.getElementById('form_keliling').value;
+        break;
+  	default:
+	    x = "";
+        break;
+  }
+
+  if (x != "") {
+	text = "";
+    document.getElementById('showhasil').style.display = "block";
+    switch(type) {
+    	case 'jari':
+        	hitungJari();
+            break;
+    	case 'luas':
+        	hitungLuas();
+            break;
+    	case 'keliling':
+        	hitungKeliling();
+            break;
+        default:
+        	text = "";
+            break;
+    }
+  } else {
+    text = "Input not valid !";
+    document.getElementById('showhasil').style.display = "none";
+  }
+  document.getElementById("null").innerHTML = text;
+}
+
+function hitungJari() {
+	var k, hasil;
+    k = document.getElementById('form_jari').value;
+    hasil = k/(2*3.14);
+    document.getElementById("hasil").innerHTML = hasil;
+}
+
+function hitungLuas() {
+	var r, hasil;
+    r = document.getElementById('form_luas').value;
+    hasil = 3.14*(r*r);
+    document.getElementById("hasil").innerHTML = hasil;
+}
+
+function hitungKeliling() {
+	var r, hasil;
+    r = document.getElementById('form_keliling').value;
+    hasil = (2*3.14)*r;
+    document.getElementById("hasil").innerHTML = hasil;
+}
+
+
+document.getElementById("defaultOpen").click();
+</script>
+   
+</body>
+</html> 
